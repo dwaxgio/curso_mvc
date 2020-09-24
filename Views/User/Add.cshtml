@@ -1,0 +1,40 @@
+﻿<!--16. se crea vista -->
+@model CursoMVC.Models.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "Agregar usuario";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Hago uso de helpers para poblar formulario-->
+        @using (Html.BeginForm("Add", "User", FormMethod.Post, new { role = "foem", @class = "" }))  // EL FormMethod.Post indica que llega al metodo httpPost del add de UserController
+        {
+            @Html.AntiForgeryToken(); // Helper para manejo de seguridad
+
+            @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+            @Html.LabelFor(d => d.Email)// Campo Email de UserViewModel
+            @Html.TextBoxFor(d => d.Email, new { @class = "form-control" })
+            @Html.ValidationMessage("Email", new { @class = "text-danger" })<br>
+
+            @Html.LabelFor(d => d.Password)
+            @Html.TextBoxFor(d => d.Password, new { @class = "form-control" })
+            @Html.ValidationMessage("Password", new { @class = "text-danger" })<br>
+
+            @Html.LabelFor(d => d.ConfirmPassword)
+            @Html.TextBoxFor(d => d.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessage("ConfirmPassword", new { @class = "text-danger" })<br>
+
+            @Html.LabelFor(d => d.Edad)
+            @Html.TextBoxFor(d => d.Edad, new { @class = "form-control" })
+            @Html.ValidationMessage("Edad", new { @class = "text-danger" })<br>
+
+            <div style="text-align:right;">
+                <input type="submit" class="btn btn-success" value="Guardar" />
+            </div>
+        }
+    </div>
+</div>
+
