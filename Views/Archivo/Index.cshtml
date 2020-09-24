@@ -1,0 +1,47 @@
+﻿<!-- 23. Agrego vista, en la cual se implemente ArchivoViewModel, para remitir posteriormente los datos al metodo post del controlador de File-->
+@model CursoMVC.Models.ViewModels.ArchivoViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+<!-- Se usa enctype-->
+@using (Html.BeginForm("Save", "Archivo", FormMethod.Post, new { enctype = "multipart/form-data" }))  // Begin form tiene tres parametros principales
+                                                                                                     //Metodo, Controlador, Metodo de HTTP, y enctype para poder enviar los datos
+{
+    @Html.AntiForgeryToken(); // Sirve para evitar peticiones desde sitios web externos
+    <div class="row">
+        <div class="col-md-6 col-lg-offset-3">
+            <div class="form-group">
+                @Html.LabelFor(d => d.Archivo1)
+                @Html.TextBoxFor(d => d.Archivo1, new { @class = "form-control", type = "file", accept = ".png" })
+                @Html.ValidationMessageFor(d => d.Archivo1, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.Archivo2)
+                @Html.TextBoxFor(d => d.Archivo2, new { @class = "form-control", type = "file", accept = ".png" })
+                @Html.ValidationMessageFor(d => d.Archivo2, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(d => d.Cadena)
+                @Html.TextBoxFor(d => d.Cadena, new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.Cadena, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group" style="text-align:right;">
+                <input type="submit" class="btn btn-success" value="Guardar">
+            </div>
+        </div>
+    </div>
+}
