@@ -14,6 +14,8 @@ namespace CursoMVC.Filters
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var oUser = (user)HttpContext.Current.Session["User"]; // Trae la información de la sesión actual
+            // Para cerrar sesión, basta con crear un botón que haga que el objeto se haga null
+
             if(oUser == null)
             {
                 if (filterContext.Controller is AccessController == false)  // Si peticion llega a la ruta diferente a AccesController, ejecute lo siguiente

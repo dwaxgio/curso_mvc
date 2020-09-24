@@ -48,5 +48,8 @@ namespace CursoMVC.Controllers
                 return Content("Ocurrio un error: " + ex.Message); // Content es un metodo que retorna un texto, en vez de una vista
             }            
         }
+
+        
+
     }
 }
