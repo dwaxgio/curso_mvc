@@ -28,4 +28,28 @@ namespace CursoMVC.Models.ViewModels
         [Required]
         public int Edad { get; set; }
     }
+
+    // 20. Se crea clase para el edit del controller
+    public class EditUserViewModel
+    {
+        public int Id { get; set; }
+
+        [Required]
+        [EmailAddress] //Valida que sea correo
+        [Display(Name = "Correo Electrónico")]
+        [StringLength(100, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
+        public string Email { get; set; }
+
+        [DataType(DataType.Password)] // Ya se inclye como contraseña en la petición
+        [Display(Name = "Contraseña")]
+        public string Password { get; set; }
+
+        [Display(Name = "Confirma contraseña")]
+        [DataType(DataType.Password)] // Ya se inclye como contraseña en la petición
+        [Compare("Password", ErrorMessage = "Las contraseñas no son iguales")]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        public int Edad { get; set; }
+    }
 }

@@ -1,7 +1,8 @@
-﻿<!--16. se crea vista -->
-@model CursoMVC.Models.ViewModels.UserViewModel
+﻿<!-- 21. Se crea vista del metodo edit del UserController-->
+
+@model CursoMVC.Models.ViewModels.EditUserViewModel 
 @{
-    ViewBag.Title = "Agregar usuario";
+    ViewBag.Title = "Editar usuario";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -9,8 +10,10 @@
 <div class="row">
     <div class="col-md-12">
         <!-- Hago uso de helpers para poblar formulario-->
-        @using (Html.BeginForm("Add", "User", FormMethod.Post, new { role = "form", @class = "" }))  // EL FormMethod.Post indica que llega al metodo httpPost del add de UserController
+        @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { role = "form", @class = "" }))  // EL FormMethod.Post indica que llega al metodo httpPost del add de UserController
         {
+            @Html.HiddenFor(d=>d.Id)
+
             @Html.AntiForgeryToken(); // Helper para manejo de seguridad
 
             @Html.ValidationMessage("error", new { @class = "text-danger" })
@@ -35,8 +38,8 @@
                 <input type="submit" class="btn btn-success" value="Guardar" />
             </div>
 
-            
-           
+
+
         }
     </div>
 </div>

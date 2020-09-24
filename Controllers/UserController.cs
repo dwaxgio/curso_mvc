@@ -46,7 +46,7 @@ namespace CursoMVC.Controllers
         [HttpPost] // Metodo para que información solo entre por post
         public ActionResult Add(UserViewModel model) // En este método, se RECIBE la información desde el formulario
         {
-            // 16. se valida la información recibida y se guarda en la DB
+            // 17. se valida la información recibida y se guarda en la DB
             if(!ModelState.IsValid)
             {
                 return View(model);
@@ -68,6 +68,66 @@ namespace CursoMVC.Controllers
 
             // Una vez almacenado el registro, se re dirige a la vista del listado de usuarios, mediante el metodo Index() de este controlador
             return Redirect(Url.Content("~/User/"));
+        }
+
+        // 19. Se crean los métodos Delete y Edit
+        
+        public ActionResult Edit(int Id)// Para entrar a la vista
+        {
+            EditUserViewModel model = new EditUserViewModel();
+
+            using (var db = new CursomvcEntities())
+            {
+                var oUser = db.user.Find(Id);
+                model.Edad = (int)oUser.edad; // Llena el campo edad del modelo
+                model.Email = oUser.email;
+                model.Id = oUser.id;
+            }
+
+            return View(model); // Vista recibe el modelo con los datos para que lo llene
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditUserViewModel model) // Recibe el modelo
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (var db = new CursomvcEntities())
+            {
+                var oUser = db.user.Find(model.Id);
+                oUser.email = model.Email;
+                oUser.edad = model.Edad;
+
+                if(model.Password != null && model.Password.Trim() != "")
+                {
+                    oUser.password = model.Password;
+                }
+
+                db.Entry(oUser).State = System.Data.Entity.EntityState.Modified; // Se le indica a EF que el objego oUser se editó
+                db.SaveChanges();
+
+            }
+
+            return Redirect(Url.Content("~/User/"));
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int Id) // Recibe el modelo
+        {
+            using (var db = new CursomvcEntities())
+            {
+                var oUser = db.user.Find(Id);
+                oUser.idState = 3; // Estado 3 para eliminado                
+
+                db.Entry(oUser).State = System.Data.Entity.EntityState.Modified; // Se le indica a EF que el objego oUser se editó
+                db.SaveChanges();
+
+            }
+
+            return Content("1"); // Content se usa para en vez de regresar una vista, regresar un contenido
         }
     }
 }
